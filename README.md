@@ -83,12 +83,12 @@ Perintah ini akan membuat seluruh struktur tabel dan mengisi data dummy realisti
 
 **Referensi data user seed** (password dummy untuk semua: `password123`):
 
-| Nama | Email | Role |
-|---|---|---|
-| Nova Andriana | nova.andriana@cjms.id | Admin |
-| Siti Nurhaliza | siti.nurhaliza@cjms.id | Sales |
-| Andi Wijaya | andi.wijaya@cjms.id | Sales |
-| Rina Marlina | rina.marlina@cjms.id | Sales |
+| Nama | Email |
+|---|---|
+| Nova Andriana | nova.andriana@cjms.id |
+| Siti Nurhaliza | siti.nurhaliza@cjms.id |
+| Andi Wijaya | andi.wijaya@cjms.id |
+| Rina Marlina | rina.marlina@cjms.id |
 
 > Catatan: sistem ini fokus pada business logic customer journey (bukan modul auth), sehingga tidak ada halaman login. Aksi-aksi di UI (misalnya "dicatat oleh") menggunakan salesperson yang dipilih langsung dari dropdown yang datanya bersumber dari tabel `User` di atas.
 
