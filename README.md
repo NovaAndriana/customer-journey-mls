@@ -81,7 +81,8 @@ pnpm db:seed
 
 Perintah ini akan membuat seluruh struktur tabel dan mengisi data dummy realistis: 4 user (1 admin, 3 salesperson), 6 motor model, dan 20 customer dengan berbagai posisi di pipeline (termasuk beberapa yang sudah Deal dan Rejected), lengkap dengan riwayat interaksi dan histori perpindahan stage.
 
-**Referensi data user seed** (password dummy untuk semua: `password123`):
+**Kredensial Akun Pengujian (Login):**
+Gunakan password `password123` untuk semua akun di bawah ini:
 
 | Nama | Email |
 |---|---|
@@ -89,8 +90,6 @@ Perintah ini akan membuat seluruh struktur tabel dan mengisi data dummy realisti
 | Siti Nurhaliza | siti.nurhaliza@cjms.id |
 | Andi Wijaya | andi.wijaya@cjms.id |
 | Rina Marlina | rina.marlina@cjms.id |
-
-> Catatan: sistem ini fokus pada business logic customer journey (bukan modul auth), sehingga tidak ada halaman login. Aksi-aksi di UI (misalnya "dicatat oleh") menggunakan salesperson yang dipilih langsung dari dropdown yang datanya bersumber dari tabel `User` di atas.
 
 ### 6. Jalankan Aplikasi
 
@@ -124,6 +123,11 @@ pnpm dev:web
 
 ## Fitur Utama
 
+### Autentikasi & Otorisasi
+- **Login & Logout**: Autentikasi berbasis JWT Token yang disimpan aman di Cookie (HttpOnly/Client Cookie).
+- **Route Guard Middleware**: Middleware Next.js memproteksi route privat dan mengarahkan user non-autentikasi ke `/login`.
+- **Dynamic Session Header**: Informasi profil dan role pengguna aktif ditampilkan secara dinamis pada Header UI.
+  
 ### Pipeline Kanban (Halaman `/`)
 - Board 6 kolom: New → Contacted → Followed Up → Presented → Deal, plus Rejected
 - Pindah stage langsung dari dropdown aksi pada tiap card, dengan validasi transisi (tidak bisa lompat sembarang stage)
