@@ -85,7 +85,7 @@ Perintah ini akan membuat seluruh struktur tabel dan mengisi data dummy realisti
 
 | Nama | Email | Role |
 |---|---|---|
-| Budi Santoso | budi.santoso@cjms.id | Admin |
+| Nova Andriana | nova.andriana@cjms.id | Admin |
 | Siti Nurhaliza | siti.nurhaliza@cjms.id | Sales |
 | Andi Wijaya | andi.wijaya@cjms.id | Sales |
 | Rina Marlina | rina.marlina@cjms.id | Sales |

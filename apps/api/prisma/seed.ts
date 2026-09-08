@@ -31,7 +31,7 @@ async function main() {
 
   const users = await Promise.all(
     [
-      { name: 'Budi Santoso', email: 'budi.santoso@cjms.id', role: Role.ADMIN },
+      { name: 'Nova Andriana', email: 'nova.andriana@cjms.id', role: Role.ADMIN },
       { name: 'Siti Nurhaliza', email: 'siti.nurhaliza@cjms.id', role: Role.SALES },
       { name: 'Andi Wijaya', email: 'andi.wijaya@cjms.id', role: Role.SALES },
       { name: 'Rina Marlina', email: 'rina.marlina@cjms.id', role: Role.SALES },
