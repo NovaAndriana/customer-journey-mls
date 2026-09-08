@@ -178,43 +178,47 @@ export function CustomerFormDialog() {
             <div className="space-y-1.5">
               <Label>Salesperson *</Label>
               <Select
-                    value={form.salespersonId}
-                    onValueChange={(value) =>
-                        setForm((f) => ({ ...f, salespersonId: value ?? '' }))
-                    }
-                    >
-                    <SelectTrigger>
-                        <SelectValue placeholder="Pilih sales" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        {salespersons.map((u) => (
-                        <SelectItem key={u.id} value={u.id}>
-                            {u.name}
-                        </SelectItem>
-                        ))}
-                    </SelectContent>
-                </Select>
+                value={form.salespersonId}
+                onValueChange={(value) =>
+                  setForm((f) => ({ ...f, salespersonId: value ?? '' }))
+                }
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Pilih sales">
+                    {salespersons.find((u) => u.id === form.salespersonId)?.name}
+                  </SelectValue>
+                </SelectTrigger>
+                <SelectContent>
+                  {salespersons.map((u) => (
+                    <SelectItem key={u.id} value={u.id}>
+                      {u.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           </div>
 
           <div className="space-y-1.5">
             <Label>Motor yang Diminati</Label>
             <Select
-                value={form.interestedMotorId}
-                onValueChange={(value) =>
-                    setForm((f) => ({ ...f, interestedMotorId: value ?? '' }))
-                }
-                >
-                <SelectTrigger>
-                    <SelectValue placeholder="Opsional" />
-                </SelectTrigger>
-                <SelectContent>
-                    {motorModels.map((m) => (
-                    <SelectItem key={m.id} value={m.id}>
-                        {m.name}
-                    </SelectItem>
-                    ))}
-                </SelectContent>
+              value={form.interestedMotorId}
+              onValueChange={(value) =>
+                setForm((f) => ({ ...f, interestedMotorId: value ?? '' }))
+              }
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Opsional">
+                  {motorModels.find((m) => m.id === form.interestedMotorId)?.name}
+                </SelectValue>
+              </SelectTrigger>
+              <SelectContent>
+                {motorModels.map((m) => (
+                  <SelectItem key={m.id} value={m.id}>
+                    {m.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
             </Select>
           </div>
 
