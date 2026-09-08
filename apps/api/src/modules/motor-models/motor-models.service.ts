@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from '../../prisma/prisma.service';
 import { CreateMotorModelDto } from './dto/create-motor-model.dto';
 import { UpdateMotorModelDto } from './dto/update-motor-model.dto';
-import { PaginationQueryDto } from '../../common/dto/pagination-query.dto';
+import { FindMotorModelsDto } from './dto/find-motor-models.dto';
 import { buildPaginationMeta } from '../../common/helpers/pagination.helper';
 
 @Injectable()
@@ -13,7 +13,7 @@ export class MotorModelsService {
     return this.prisma.motorModel.create({ data: dto });
   }
 
-  async findAll(query: PaginationQueryDto & { search?: string }) {
+  async findAll(query: FindMotorModelsDto) {
     const { page = 1, limit = 10, sortBy = 'createdAt', sortOrder = 'desc', search } = query;
     const where = search
       ? { name: { contains: search, mode: 'insensitive' as const } }

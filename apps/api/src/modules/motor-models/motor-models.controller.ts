@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestj
 import { MotorModelsService } from './motor-models.service';
 import { CreateMotorModelDto } from './dto/create-motor-model.dto';
 import { UpdateMotorModelDto } from './dto/update-motor-model.dto';
-import { PaginationQueryDto } from '../../common/dto/pagination-query.dto';
+import { FindMotorModelsDto } from './dto/find-motor-models.dto';
 
 @Controller('motor-models')
 export class MotorModelsController {
@@ -14,7 +14,7 @@ export class MotorModelsController {
   }
 
   @Get()
-  findAll(@Query() query: PaginationQueryDto & { search?: string }) {
+  findAll(@Query() query: FindMotorModelsDto) {
     return this.motorModelsService.findAll(query);
   }
 
