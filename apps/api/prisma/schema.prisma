@@ -1,0 +1,165 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  ADMIN
+  SALES
+}
+
+enum CustomerStage {
+  NEW
+  CONTACTED
+  FOLLOWED_UP
+  PRESENTED
+  DEAL
+  REJECTED
+}
+
+enum CustomerSource {
+  WALK_IN
+  REFERRAL
+  SOCIAL_MEDIA
+  WEBSITE
+  OTHER
+}
+
+enum InteractionType {
+  CALL
+  WHATSAPP
+  EMAIL
+  MEETING
+  PRESENTATION
+  FOLLOW_UP
+  NOTE
+}
+
+enum InteractionResult {
+  POSITIVE
+  NEUTRAL
+  NEGATIVE
+  NO_RESPONSE
+}
+
+model User {
+  id            String         @id @default(uuid())
+  name          String
+  email         String         @unique
+  password      String
+  role          Role           @default(SALES)
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  customers     Customer[]     @relation("SalespersonCustomers")
+  interactions  Interaction[]
+  stageChanges  StageHistory[]
+  deals         Deal[]
+
+  @@map("users")
+}
+
+model MotorModel {
+  id         String     @id @default(uuid())
+  name       String
+  price      Int
+  stockQty   Int        @default(0)
+  imageUrl   String?
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+
+  customers  Customer[]
+  deals      Deal[]
+
+  @@map("motor_models")
+}
+
+model Customer {
+  id                 String          @id @default(uuid())
+  name               String
+  phone              String
+  email              String?
+  address            String?
+  source             CustomerSource  @default(OTHER)
+  stage              CustomerStage   @default(NEW)
+
+  interestedMotor    MotorModel?     @relation(fields: [interestedMotorId], references: [id])
+  interestedMotorId  String?
+
+  salesperson        User            @relation("SalespersonCustomers", fields: [salespersonId], references: [id])
+  salespersonId      String
+
+  interactions       Interaction[]
+  stageHistory       StageHistory[]
+  deal               Deal?
+
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+
+  @@index([stage])
+  @@index([salespersonId])
+  @@map("customers")
+}
+
+model Interaction {
+  id            String              @id @default(uuid())
+
+  customer      Customer            @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  customerId    String
+
+  user          User                @relation(fields: [userId], references: [id])
+  userId        String
+
+  type          InteractionType
+  result        InteractionResult?
+  notes         String
+  followUpDate  DateTime?
+
+  createdAt     DateTime            @default(now())
+
+  @@index([customerId])
+  @@map("interactions")
+}
+
+model StageHistory {
+  id            String         @id @default(uuid())
+
+  customer      Customer       @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  customerId    String
+
+  changedBy     User           @relation(fields: [changedById], references: [id])
+  changedById   String
+
+  fromStage     CustomerStage
+  toStage       CustomerStage
+  notes         String?
+
+  changedAt     DateTime       @default(now())
+
+  @@index([customerId])
+  @@map("stage_history")
+}
+
+model Deal {
+  id             String      @id @default(uuid())
+
+  customer       Customer    @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  customerId     String      @unique
+
+  motorModel     MotorModel  @relation(fields: [motorModelId], references: [id])
+  motorModelId   String
+
+  salesperson    User        @relation(fields: [salespersonId], references: [id])
+  salespersonId  String
+
+  finalPrice     Int
+  unitSold       Int         @default(1)
+  dealDate       DateTime    @default(now())
+  notes          String?
+
+  @@map("deals")
+}
