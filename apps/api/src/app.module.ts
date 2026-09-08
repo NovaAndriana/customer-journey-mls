@@ -6,7 +6,7 @@ import { MotorModelsModule } from './modules/motor-models/motor-models.module';
 import { CustomersModule } from './modules/customers/customers.module';
 import { InteractionsModule } from './modules/interactions/interactions.module';
 import { AnalyticsModule } from './modules/analytics/analytics.module';
-import { AuthModule } from './modules/auth/dto/auth.module';
+import { AuthModule } from './modules/auth/auth.module';
 
 @Module({
   imports: [
