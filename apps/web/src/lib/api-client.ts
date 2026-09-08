@@ -1,10 +1,38 @@
 import axios, { AxiosError } from 'axios';
+import Cookies from 'js-cookie';
 import type { StandardResponse } from '@/types/api';
 
 export const apiClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4000/api/v1',
   headers: { 'Content-Type': 'application/json' },
 });
+
+// Interceptor Request: Otomatis tempelkan Bearer Token dari Cookie
+apiClient.interceptors.request.use(
+  (config) => {
+    const token = Cookies.get('token');
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => Promise.reject(error),
+);
+
+// Interceptor Response: Handle 401 Unauthorized (Auto Logout)
+apiClient.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (axios.isAxiosError(error) && error.response?.status === 401) {
+      if (typeof window !== 'undefined') {
+        Cookies.remove('token');
+        Cookies.remove('user');
+        window.location.href = '/login';
+      }
+    }
+    return Promise.reject(error);
+  },
+);
 
 export interface ApiErrorPayload {
   message: string | string[];
