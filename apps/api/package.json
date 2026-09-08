@@ -9,6 +9,7 @@
     "seed": "tsx prisma/seed.ts"
   },
   "scripts": {
+    "prisma": "prisma",
     "build": "nest build",
     "deploy": "nest deploy",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
